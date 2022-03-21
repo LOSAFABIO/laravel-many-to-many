@@ -29,7 +29,11 @@
           <td>{{$elemento->author}}</th>
           <td>{{$elemento->slug}}</th>
           <td>{{$elemento->category? $elemento->category->name : '-'}}</th>
-          <td>{{$elemento->tag? $elemento->tag->name : '-'}}</th>
+          <td>
+            @foreach ($elemento->tags as $tag)
+                {{$tag->name}} <br> 
+            @endforeach
+          </th>
           <td>
             <a href="{{route("admin.posts.show", $elemento->id)}}"><button type="button" class="btn btn-primary">Mostra</button></a>
           </th>

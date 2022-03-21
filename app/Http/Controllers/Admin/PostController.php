@@ -30,9 +30,10 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::all();   
+        $posts = Post::all();
+        $tags = Tag::all();   
 
-        return view('admin.posts.index', compact('posts'));
+        return view('admin.posts.index', compact('posts', 'tags'));
     }
 
     /**
@@ -106,8 +107,9 @@ class PostController extends Controller
     public function edit(Post $post)
     {
         $categories = Category::all();
+        $tags = Tag::all();
 
-        return view('admin.posts.edit', compact('post','categories'));
+        return view('admin.posts.edit', compact('post','categories','tags'));
     }
 
     /**
@@ -124,8 +126,11 @@ class PostController extends Controller
             "content"=>"required|string|max:255",
             "post_date"=>"required",
             "author"=>"required",
-            "category_id"=>"nullable"
+            "category_id"=>"nullable",
+            "tag_id"=>"nullable"
         ]);
+
+        $validated_data = $request->all();
 
         if($post->title == $validated_data['title']){
             $slug = $post->slug;
