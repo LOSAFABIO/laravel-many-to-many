@@ -50,7 +50,7 @@
         </tr>
         @endforeach
       </tbody>
-      <a href="{{route("admin.posts.create")}}"><button type="button" class="btn btn-warning">Crea nuovo</button></a>
-      <a href="{{route("admin.home")}}"><button type="button" class="btn btn-secondary mx-2">Torna alla dashboard</button></a>
+      <a href="{{route("admin.posts.create")}}"><button type="button" class="btn btn-warning my-2">Crea nuovo</button></a>
+      <a href="{{route("admin.home")}}"><button type="button" class="btn btn-secondary m-2">Torna alla dashboard</button></a>
   </table>
 @endsection
