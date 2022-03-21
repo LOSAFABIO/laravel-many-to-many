@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 
 use Illuminate\Support\Str;
 
+use App\Tag;
+
 use App\Category;
 
 use App\Post;   
@@ -28,7 +30,8 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::all();
+        $posts = Post::all();   
+
         return view('admin.posts.index', compact('posts'));
     }
 
@@ -40,8 +43,9 @@ class PostController extends Controller
     public function create()
     {
         $categories = Category::all();
+        $tags = Tag::all();
 
-        return view('admin.posts.create',compact('categories'));
+        return view('admin.posts.create',compact('categories','tags'));
     }
 
     /**
@@ -58,8 +62,11 @@ class PostController extends Controller
             "post_date"=>"required",
             "author"=>"required",
             "slug"=>"nullable",
-            "category_id"=>"nullable"
+            "category_id"=>"nullable",
+            "tag_id"=>"nullable"
         ]);
+
+        $validated_data = $request->all();
 
         $slugTmp = Str::slug($validated_data['title']);
 
@@ -73,6 +80,8 @@ class PostController extends Controller
         $validated_data['slug'] = $slugTmp;
 
         $post = Post::create($validated_data);
+
+        $post->tags()->sync($validated_data['tags']);
 
         return redirect()->route('admin.posts.index', $post->id);
     }
@@ -134,6 +143,8 @@ class PostController extends Controller
         $validated_data['slug'] = $slug; 
 
         $post->update($validated_data);
+
+        $post->tags()->sync(isset($validated_data['tags'])?$validated_data['tags']:[]);
         
         return redirect()->route('admin.posts.index', $post->id);
     }

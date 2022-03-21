@@ -50,6 +50,19 @@
                 <div class="alert alert-danger">{{ $message }}</div>
             @enderror
         </div>
+        {{-- <div class="form-check">
+            <label for="">Tags</label>
+            @foreach ($tags as $tag)
+                <input class="form-check-input" type="checkbox" value="{{$tag->id}}" id="{{$tag->slug}}" name="tags[]">
+                <label class="form-check-label" for="flexCheckDefault">
+                    {{$tag->id == old('tag_id', $post->tag_id) ? 'selected' : '-' }} >
+                    {{$tag->name}}
+                </label>
+            @endforeach
+            @error('tag_id')   
+                <div class="alert alert-danger">{{ $message }}</div>
+            @enderror
+        </div> --}}
         <a href="{{route("admin.posts.index")}}">
             <button type="button" class="btn btn-primary">Torna indietro</button>
         </a>
